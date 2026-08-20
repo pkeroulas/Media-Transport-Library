@@ -27,7 +27,7 @@ RUN apt-get update -y && \
         git build-essential pkg-config \
         libnuma-dev libjson-c-dev libpcap-dev libgtest-dev \
         libsdl2-dev libsdl2-ttf-dev libssl-dev systemtap-sdt-dev \
-        m4 clang llvm zlib1g-dev libelf-dev libcap-ng-dev libcap2-bin gcc-multilib && \
+        m4 clang llvm zlib1g-dev libelf-dev libcap-ng-dev libcap2-bin gcc-multilib nasm && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
@@ -49,6 +49,10 @@ RUN ./build.sh && \
     ninja -C build install && \
     DESTDIR=/install ninja -C build install && \
     setcap 'cap_net_raw+ep' tests/tools/RxTxApp/build/RxTxApp
+
+# Build MTL
+WORKDIR "${MTL_REPO}/ecosystem/ffmpeg_plugin"
+RUN ./build.sh
 
 # Ubuntu 24.04, runtime/final stage
 ARG MTL_REPO
