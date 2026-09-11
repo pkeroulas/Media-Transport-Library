@@ -1,7 +1,7 @@
-From dc1ba480f7c35db0a74c647009427d4617061a14 Mon Sep 17 00:00:00 2001
+From 152b0ab2dc65bffe5170da765d81912da9e0e7f3 Mon Sep 17 00:00:00 2001
 From: pkeroulas <patrick.keroulas@gmail.com>
-Date: Tue, 8 Sep 2026 15:37:37 -0400
-Subject: [PATCH v1] avdevice: add mtl in/out devsupport
+Date: Fri, 11 Sep 2026 14:19:48 -0400
+Subject: [PATCH] patch
 
 ---
  configure                | 9 +++++++++
@@ -10,10 +10,10 @@ Subject: [PATCH v1] avdevice: add mtl in/out devsupport
  3 files changed, 24 insertions(+)
 
 diff --git a/configure b/configure
-index 3b132d07c9..b3edbf1af8 100755
+index ef5cb70ba1..95d49dd7ff 100755
 --- a/configure
 +++ b/configure
-@@ -325,6 +325,7 @@ External library support:
+@@ -327,6 +327,7 @@ External library support:
                             if openssl, gnutls or libtls is not used [no]
    --enable-mediacodec      enable Android MediaCodec support [no]
    --enable-mediafoundation enable encoding via MediaFoundation [auto]
@@ -21,7 +21,7 @@ index 3b132d07c9..b3edbf1af8 100755
    --disable-metal          disable Apple Metal framework [autodetect]
    --enable-libmysofa       enable libmysofa, needed for sofalizer filter [no]
    --enable-ohcodec         enable OpenHarmony Codec support [no]
-@@ -2033,6 +2034,7 @@ EXTERNAL_LIBRARY_LIST="
+@@ -2114,6 +2115,7 @@ EXTERNAL_LIBRARY_LIST="
      libzvbi
      lv2
      mediacodec
@@ -29,7 +29,7 @@ index 3b132d07c9..b3edbf1af8 100755
      ohcodec
      openal
      opengl
-@@ -3875,6 +3877,12 @@ kmsgrab_indev_deps="libdrm"
+@@ -3994,6 +3996,12 @@ kmsgrab_indev_deps="libdrm"
  lavfi_indev_deps="avfilter"
  libcdio_indev_deps="libcdio"
  libdc1394_indev_deps="libdc1394"
@@ -42,14 +42,14 @@ index 3b132d07c9..b3edbf1af8 100755
  openal_indev_deps="openal"
  oss_indev_deps_any="sys_soundcard_h"
  oss_outdev_deps_any="sys_soundcard_h"
-@@ -7312,6 +7320,7 @@ enabled mbedtls           && { check_pkg_config mbedtls mbedtls mbedtls/x509_crt
+@@ -7452,6 +7460,7 @@ enabled mbedtls           && { check_pkg_config mbedtls mbedtls mbedtls/x509_crt
+                                check_pkg_config mbedtls mbedtls mbedtls/ssl.h mbedtls_ssl_init ||
                                 check_lib mbedtls mbedtls/ssl.h mbedtls_ssl_init -lmbedtls -lmbedx509 -lmbedcrypto ||
                                 die "ERROR: mbedTLS not found"; }
- enabled mediacodec        && { enabled jni || die "ERROR: mediacodec requires --enable-jni"; }
 +enabled mtl               && require_pkg_config mtl "mtl >= 22.12.0" mtl/st_pipeline_api.h mtl_init
+ enabled mediacodec        && { enabled jni || die "ERROR: mediacodec requires --enable-jni"; } &&
+                                add_compat android/binder.o
  enabled mmal              && { check_lib mmal interface/mmal/mmal.h mmal_port_connect -lmmal_core -lmmal_util -lmmal_vc_client -lbcm_host ||
-                                { ! enabled cross_compile &&
-                                  add_cflags -isystem/opt/vc/include/ -isystem/opt/vc/include/interface/vmcs_host/linux -isystem/opt/vc/include/interface/vcos/pthreads -fgnu89-inline &&
 diff --git a/libavdevice/Makefile b/libavdevice/Makefile
 index a226368d16..cb6b1a63a8 100644
 --- a/libavdevice/Makefile
@@ -88,5 +88,5 @@ index 573595f416..c3dc05cb17 100644
  extern const FFInputFormat  ff_oss_demuxer;
  extern const FFOutputFormat ff_oss_muxer;
 -- 
-2.43.0
+2.50.1 (Apple Git-155)
 
