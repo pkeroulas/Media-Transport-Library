@@ -79,7 +79,7 @@ WORKDIR /home/imtl/
 RUN apt-get clean -y && rm -rf /var/lib/apt/lists/* && \
     apt-get update -y && \
     apt-get install -y --no-install-recommends ca-certificates sudo curl unzip && \
-    apt-get install -y --no-install-recommends libnuma1 libjson-c5 libpcap0.8t64 libsdl2-2.0-0 libsdl2-ttf-2.0-0 libsndio7.0 libXv.so.1 libssl3t64 zlib1g libelf1t64 libcap-ng0 libatomic1 pciutils iproute2 && \
+    apt-get install -y --no-install-recommends libnuma1 libjson-c5 libpcap0.8t64 libsdl2-2.0-0 libsdl2-ttf-2.0-0 libsndio7.0 libxv1 libssl3t64 zlib1g libelf1t64 libcap-ng0 libatomic1 pciutils iproute2 && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
