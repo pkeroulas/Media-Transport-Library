@@ -87,7 +87,11 @@ static int mtl_st20p_write_header(AVFormatContext* ctx) {
     return AVERROR(EINVAL);
   }
   s->framerate = ctx->streams[0]->avg_frame_rate;
-  ops_tx.fps = framerate_to_st_fps(s->framerate);
+  /* MTL's st20p fps is fields per second; the input stream's avg_frame_rate counts
+   * full (woven) frames per second, so double it to get the field rate. */
+  AVRational field_rate =
+      ops_tx.interlaced ? av_mul_q(s->framerate, (AVRational){2, 1}) : s->framerate;
+  ops_tx.fps = framerate_to_st_fps(field_rate);
   if (ops_tx.fps == ST_FPS_MAX) {
     err(ctx, "%s, frame rate %0.2f is not supported\n", __func__, av_q2d(s->framerate));
     return AVERROR(EINVAL);
